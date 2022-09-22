@@ -1,11 +1,11 @@
-:quickstart-project-name: quickstart-repo-name
+:quickstart-project-name: Spot by Netapp Elastigroup Quickstart
 :quickstart-github-org: aws-quickstart
-:partner-product-name: Full Product Name
-:partner-product-short-name: Product Name
-:partner-company-name: Example Company Name, Ltd.
-:doc-month: January
+:partner-product-name: Spot by Netapp Elastigroup
+:partner-product-short-name: Elastigroup
+:partner-company-name: Spot by Netapp
+:doc-month: September 
 :doc-year: 2022
-:partner-contributors: John Smith, {partner-company-name}
+:partner-contributors: Zak Harabedian, {Spot by Netapp}, Karan Shetty {Spot by Netapp}
 // :other-contributors: Akua Mansa, Trek10
 :aws-contributors: Janine Singh, AWS IoT Partner team
 :aws-ia-contributors: Toni Jones, AWS Integration & Automation team
