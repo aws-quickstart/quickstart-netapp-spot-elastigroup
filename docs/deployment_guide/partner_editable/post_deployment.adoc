@@ -1,3 +1,16 @@
 // Include any postdeployment steps here, such as steps necessary to test that the deployment was successful. If there are no postdeployment steps, leave this file empty.
 
 == Postdeployment steps
+
+You can view the deployed Elastigroup and dashboards by logging into the https://console.spotinst.com[Spot Console]. The following resources can also be used to help better understand Elastigroup features: 
+
+
+* https://docs.spot.io/elastigroup/[Elastigroup Documentation]
+
+* https://docs.spot.io/api/#operation/elastigroupAwsCreate/[Elastigroup API Documentation]
+
+* https://docs.spot.io/elastigroup/features/intelligent-traffic-flow/[Elastigroup Intelligent Traffic Flow]\
+
+* https://docs.spot.io/elastigroup/features/scaling/target-scaling?id=predictive-autoscaling[Elastigroup Predictive Autoscaling]
+
+
