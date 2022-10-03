@@ -1,0 +1,402 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  AWS CloudFormation Template creates a new VPC, IGW, 3 public Subnets, load balanced Elastigroup with a sample website where the instances can accept traffic from the load balancer. The website is available
+  on port 80, however, the instances can be configured to listen on any port (8888 by default). ITF makes sure the traffic is distributed across the instance types by vCPU weight and Predictive auto-scaling
+  can scale up and down instances in advance using ML algorithm. Scheduling tasks are set up to automatically scale down the group to 0 on Weekends(At 12:00 AM, only on Saturday (UTC)) and scale the capacity
+  back up during Weekdays(At 12:00 AM, only on Monday (UTC)). **WARNING** This template creates one or more Amazon EC2 instances an Application Load Balancer and target groups. You will be billed for the
+  AWS resources used if you create a stack from this template.
+Parameters:
+  AvailabilityZones:
+    Type: List<AWS::EC2::AvailabilityZone::Name>
+    Description: Select 3 Availability Zones to use for the subnets in the VPC.
+  VpcName:
+    Type: String
+    Default: VPC-Elastigroup
+    Description: Name for the VPC
+  VpcCIDR:
+    Type: String
+    Description: CIDR block for the VPC.
+    AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    ConstraintDescription: CIDR block parameter must be in the format "x.x.x.x/16-28".
+    Default: 192.168.0.0/16
+  PublicSubnet1CIDR:
+    Type: String
+    Description: CIDR block for private subnet 1, located in Availability Zone 1.
+    AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 192.168.64.0/18
+  PublicSubnet2CIDR:
+    Type: String
+    Description: CIDR block for the public subnet 2, located in Availability Zone 2.
+    AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 192.168.128.0/18
+  PublicSubnet3CIDR:
+    Type: String
+    Description: CIDR block for the public subnet 3, located in Availability Zone 3.
+    AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 192.168.192.0/18
+  AccountId:
+    Type: String
+    Description: Provide Spotinst Account ID, act-...
+  AccessToken:
+    Type: String
+    Description: Provide Spotinst API Token
+  KeyPair:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  shouldRoll:
+    Type: String
+    Default: 'false'
+    Description: Should roll when updating
+  shouldUpdateTargetCapacity:
+    Type: String
+    Default: 'true'
+    AllowedValues:
+      - 'false'
+      - 'true'
+    Description: Should update target capacity on group update
+  AWSAccountType:
+    Description: The type of AWS account the resources are created in
+    Type: String
+    AllowedValues:
+      - AWSChina
+      - AWS
+    Default: AWS
+  ElastigroupName:
+    Type: String
+    Default: ElastigroupQuickStart
+    Description: Provide a Name for your Elastigroup
+Mappings:
+  AWSAccountTypeToDetails:
+    AWSChina:
+      ServiceTokenAccount: '779522903477'
+      EC2ServiceEndpoint: ec2.amazonaws.com.cn
+      ArnPrefix: arn:aws-cn
+    AWS:
+      ServiceTokenAccount: '178579023202'
+      EC2ServiceEndpoint: ec2.amazonaws.com
+      ArnPrefix: arn:aws
+  RegionMap:
+    af-south-1:
+      AMI: ami-064cc455f8a1ef504
+    ap-east-1:
+      AMI: ami-f85b1989
+    ap-northeast-1:
+      AMI: ami-0b2c2a754d5b4da22
+    ap-northeast-2:
+      AMI: ami-0493ab99920f410fc
+    ap-northeast-3:
+      AMI: ami-01344f6f63a4decc1
+    ap-south-1:
+      AMI: ami-03cfb5e1fb4fac428
+    ap-southeast-1:
+      AMI: ami-0ba35dc9caf73d1c7
+    ap-southeast-2:
+      AMI: ami-0ae99b503e8694028
+    ca-central-1:
+      AMI: ami-0803e21a2ec22f953
+    cn-north-1:
+      AMI: ami-07a3f215cc90c889c
+    cn-northwest-1:
+      AMI: ami-0a3b3b10f714a0ff4
+    eu-central-1:
+      AMI: ami-0474863011a7d1541
+    eu-north-1:
+      AMI: ami-0de4b8910494dba0f
+    eu-south-1:
+      AMI: ami-08427144fe9ebdef6
+    eu-west-1:
+      AMI: ami-015232c01a82b847b
+    eu-west-2:
+      AMI: ami-0765d48d7e15beb93
+    eu-west-3:
+      AMI: ami-0caf07637eda19d9c
+    me-south-1:
+      AMI: ami-0744743d80915b497
+    sa-east-1:
+      AMI: ami-0a52e8a6018e92bb0
+    us-east-1:
+      AMI: ami-032930428bf1abbff
+    us-east-2:
+      AMI: ami-027cab9a7bf0155df
+    us-west-1:
+      AMI: ami-088c153f74339f34c
+    us-west-2:
+      AMI: ami-01fee56b22f308154
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref 'VpcCIDR'
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref 'VpcName'
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref 'InternetGateway'
+      VpcId: !Ref 'VPC'
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref 'VPC'
+      Tags:
+        - Key: Name
+          Value: Public Subnets
+        - Key: Network
+          Value: Public
+  Route:
+    DependsOn: VPCGatewayAttachment
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref 'RouteTable'
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref 'InternetGateway'
+  Subnet01:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Subnet 01
+    Properties:
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select
+        - '0'
+        - !Ref 'AvailabilityZones'
+      CidrBlock: !Ref 'PublicSubnet1CIDR'
+      VpcId: !Ref 'VPC'
+      Tags:
+        - Key: Name
+          Value: ElastigroupQuickstart
+  Subnet02:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Subnet 02
+    Properties:
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select
+        - '1'
+        - !Ref 'AvailabilityZones'
+      CidrBlock: !Ref 'PublicSubnet2CIDR'
+      VpcId: !Ref 'VPC'
+      Tags:
+        - Key: Name
+          Value: ElastigroupQuickstart
+  Subnet03:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Subnet 03
+    Properties:
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select
+        - '2'
+        - !Ref 'AvailabilityZones'
+      CidrBlock: !Ref 'PublicSubnet3CIDR'
+      VpcId: !Ref 'VPC'
+      Tags:
+        - Key: Name
+          Value: ElastigroupQuickstart
+  Subnet01RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref 'Subnet01'
+      RouteTableId: !Ref 'RouteTable'
+    DependsOn:
+      - Route
+  Subnet02RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref 'Subnet02'
+      RouteTableId: !Ref 'RouteTable'
+    DependsOn:
+      - Route
+  Subnet03RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref 'Subnet03'
+      RouteTableId: !Ref 'RouteTable'
+    DependsOn:
+      - Route
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets:
+        - !Ref 'Subnet01'
+        - !Ref 'Subnet02'
+        - !Ref 'Subnet03'
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref 'ALBTargetGroup'
+      LoadBalancerArn: !Ref 'ApplicationLoadBalancer'
+      Port: '80'
+      Protocol: HTTP
+  ALBListenerRule1:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref 'ALBTargetGroup'
+      Conditions:
+        - Field: http-header
+          HttpHeaderConfig:
+            HttpHeaderName: User-Agent
+            Values:
+              - Chrome
+      ListenerArn: !Ref 'ALBListener'
+      Priority: 1
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 3
+      Port: 80
+      Protocol: HTTP
+      UnhealthyThresholdCount: 5
+      VpcId: !Ref 'VPC'
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access and HTTP access on the inbound port
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          SourceSecurityGroupId: !Select
+            - 0
+            - !GetAtt 'ApplicationLoadBalancer.SecurityGroups'
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: '0.0.0.0/0'
+          Description: Allow SSH access to Any IP
+      VpcId: !Ref 'VPC'
+  SpotinstElastigroup:
+    Type: Custom::elasticgroup
+    Properties:
+      ServiceToken: !Sub
+        - ${ArnPrefix}:lambda:${AWS::Region}:${ServiceTokenAccount}:function:spotinst-cloudformation
+        - ArnPrefix: !FindInMap
+            - AWSAccountTypeToDetails
+            - !Ref 'AWSAccountType'
+            - ArnPrefix
+          ServiceTokenAccount: !FindInMap
+            - AWSAccountTypeToDetails
+            - !Ref 'AWSAccountType'
+            - ServiceTokenAccount
+      accessToken: !Ref 'AccessToken'
+      accountId: !Ref 'AccountId'
+      updatePolicy:
+        shouldRoll: !Ref 'shouldRoll'
+        rollConfig:
+          batchSizePercentage: 50
+          gracePeriod: 600
+        shouldUpdateTargetCapacity: !Ref 'shouldUpdateTargetCapacity'
+      group:
+        name: !Ref 'ElastigroupName'
+        region: !Ref 'AWS::Region'
+        strategy:
+          risk: 100
+          availabilityVsCost: balanced
+          drainingTimeout: 120
+          fallbackToOd: true
+          revertToSpot:
+            performAt: always
+        capacity:
+          target: 2
+          minimum: 1
+          maximum: 10
+          unit: instance
+        scaling:
+          target:
+            - policyName: Target CPU 50
+              namespace: AWS/EC2
+              metricName: CPUUtilization
+              statistic: average
+              unit: percent
+              target: 50
+              cooldown: 300
+              predictive:
+                mode: FORECAST_AND_SCALE
+        compute:
+          instanceTypes:
+            ondemand: t2.medium
+            spot:
+              - t2.micro
+              - t2.small
+              - t2.medium
+              - t2.large
+              - t2.xlarge
+              - t2.2xlarge
+          subnetIds:
+            - !Ref 'Subnet01'
+            - !Ref 'Subnet02'
+            - !Ref 'Subnet03'
+          product: Linux/UNIX
+          launchSpecification:
+            loadBalancersConfig: {}
+            securityGroupIds:
+              - !Ref 'InstanceSecurityGroup'
+            monitoring: false
+            ebsOptimized: false
+            imageId: !FindInMap
+              - RegionMap
+              - !Ref 'AWS::Region'
+              - AMI
+            keyPair: !Ref 'KeyPair'
+            userData: IyEvYmluL2Jhc2gKeXVtIHVwZGF0ZSAteQp5dW0gaW5zdGFsbCAteSBodHRwZC54ODZfNjQKc2VydmljZSBodHRwZCBzdGFydAplY2hvICJXZWxjb21lIHRvIEVsYXN0aWdyb3VwIHR1dG9yaWFsLiIgPiAvdmFyL3d3dy9odG1sL2luZGV4Lmh0bWw=
+            tags:
+              - tagKey: Creator
+                tagValue: Spot
+            tenancy: default
+            itf:
+              weightStrategy: vcpu
+              fixedTargetGroups: false
+              loadBalancers:
+                - loadBalancerArn: !Ref 'ApplicationLoadBalancer'
+                  listenerRules:
+                    - ruleArn: !Ref 'ALBListenerRule1'
+              targetGroupConfig:
+                vpcId: !Ref 'VPC'
+                protocol: HTTP
+                port: 80
+                protocolVersion: HTTP1
+                healthCheckProtocol: HTTP
+                healthCheckPath: /
+                healthCheckPort: traffic-port
+                healthCheckTimeoutSeconds: 5
+                healthyThresholdCount: 5
+                unhealthyThresholdCount: 2
+                healthCheckIntervalSeconds: 30
+                matcher:
+                  httpCode: '200'
+              migrationHealthinessThreshold: 50
+        scheduling:
+          tasks:
+            - taskType: scale
+              cronExpression: '0 0 * * 6'
+              scaleTargetCapacity: 0
+              scaleMinCapacity: 0
+              scaleMaxCapacity: 0
+              isEnabled: true
+            - taskType: scale
+              cronExpression: '0 0 * * 1'
+              scaleTargetCapacity: 2
+              scaleMinCapacity: 1
+              scaleMaxCapacity: 10
+              isEnabled: true
+Outputs:
+  VPCId:
+    Value: !Ref 'VPC'
+  ElastigroupId:
+    Value: !Ref 'SpotinstElastigroup'
+  ApplicationLoadBalancer:
+    Value: !Ref 'ApplicationLoadBalancer'
