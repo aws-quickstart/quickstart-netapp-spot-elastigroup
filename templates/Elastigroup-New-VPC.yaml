@@ -13,7 +13,7 @@ Parameters:
     Type: String
     Default: VPC-Elastigroup
     Description: Name for the VPC
-  VpcCIDR:
+  VPCCIDR:
     Type: String
     Description: CIDR block for the VPC.
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
@@ -130,7 +130,7 @@ Resources:
   VPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: !Ref 'VpcCIDR'
+      CidrBlock: !Ref 'VPCCIDR'
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
