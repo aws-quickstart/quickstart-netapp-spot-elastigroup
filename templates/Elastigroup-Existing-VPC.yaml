@@ -4,7 +4,7 @@ Description: >-
   instances can be configured to listen on any port (8888 by default). ITF makes sure the traffic is distributed across the instance types by vCPU weight and Predictive auto scaling can scale up and down
   instances in advance using ML algorithm. Scheduling tasks are set up to automatically scale down the group to 0 on Weekends(At 12:00 AM, only on Saturday (UTC)) and scale the capacity back up during Weekdays(At
   12:00 AM, only on Monday (UTC)). **WARNING** This template creates one or more Amazon EC2 instances an Application Load Balancer and target groups. You will be billed for the AWS resources used if you
-  create a stack from this template.
+  create a stack from this template. (qs-1ti8doc1u)
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -24,14 +24,6 @@ Metadata:
           - AWSAccountType
           - ElastigroupName
     ParameterLabels:
-      AvailabilityZones:
-        default: Availability Zones
-      PublicSubnet1CIDR:
-        default: Public subnet 1 CIDR
-      PublicSubnet2CIDR:
-        default: Public subnet 2 CIDR
-      PublicSubnet3CIDR:
-        default: Public subnet 3 CIDR
       VpcId:
         default: VPC ID
       Subnets:
@@ -68,7 +60,7 @@ Parameters:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
- ShouldRoll:
+  ShouldRoll:
     Type: String
     Default: 'false'
     Description: Should roll when updating
