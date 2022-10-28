@@ -5,6 +5,58 @@ Description: >-
   can scale up and down instances in advance using ML algorithm. Scheduling tasks are set up to automatically scale down the group to 0 on Weekends(At 12:00 AM, only on Saturday (UTC)) and scale the capacity
   back up during Weekdays(At 12:00 AM, only on Monday (UTC)). **WARNING** This template creates one or more Amazon EC2 instances an Application Load Balancer and target groups. You will be billed for the
   AWS resources used if you create a stack from this template.
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Availability Zone configuration
+        Parameters:
+          - AvailabilityZones
+      - Label:
+          default: Network configuration
+        Parameters:
+          - VPCCIDR
+          - PublicSubnet1CIDR
+          - PublicSubnet2CIDR
+          - PublicSubnet3CIDR
+          - VpcName
+      - Label:
+          default: Elastic Spot Config
+        Parameters:
+          - AccountId
+          - AccessToken
+          - KeyPair
+          - ShouldRoll
+          - ShouldUpdateTargetCapacity
+          - AWSAccountType
+          - ElastigroupName
+    ParameterLabels:
+      AvailabilityZones:
+        default: Availability Zones
+      PublicSubnet1CIDR:
+        default: Public subnet 1 CIDR
+      PublicSubnet2CIDR:
+        default: Public subnet 2 CIDR
+      PublicSubnet3CIDR:
+        default: Public subnet 3 CIDR
+      VPCCIDR:
+        default: VPC CIDR
+      VpcName:
+        default: VPC Name
+      AccountId:
+        default: Spotinst Account ID
+      AccessToken:
+        default: Spotinst API Token
+      KeyPair:
+        default: EC2 KeyPair
+      ShouldRoll:
+        default: Should roll when updating
+      ShouldUpdateTargetCapacity:
+        default: Should update target capacity on group update
+      AWSAccountType:
+        default: Type of AWS account the resources are created in
+      ElastigroupName:
+        default: Name for your Elastigroup
 Parameters:
   AvailabilityZones:
     Type: List<AWS::EC2::AvailabilityZone::Name>
@@ -47,11 +99,11 @@ Parameters:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
-  shouldRoll:
+  ShouldRoll:
     Type: String
     Default: 'false'
     Description: Should roll when updating
-  shouldUpdateTargetCapacity:
+  ShouldUpdateTargetCapacity:
     Type: String
     Default: 'true'
     AllowedValues:
@@ -295,11 +347,11 @@ Resources:
       accessToken: !Ref 'AccessToken'
       accountId: !Ref 'AccountId'
       updatePolicy:
-        shouldRoll: !Ref 'shouldRoll'
+        shouldRoll: !Ref 'ShouldRoll'
         rollConfig:
           batchSizePercentage: 50
           gracePeriod: 600
-        shouldUpdateTargetCapacity: !Ref 'shouldUpdateTargetCapacity'
+        shouldUpdateTargetCapacity: !Ref 'ShouldUpdateTargetCapacity'
       group:
         name: !Ref 'ElastigroupName'
         region: !Ref 'AWS::Region'
