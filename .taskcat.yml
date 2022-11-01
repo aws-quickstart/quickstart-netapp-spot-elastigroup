@@ -1,12 +1,14 @@
 project:
   name: quickstart-netapp-spot-elasticgroup
   owner: quickstart-eng@amazon.com
- 
+
 tests:
   default-New-VPC:
     template: templates/Elastigroup-New-VPC.yaml
     parameters:
       AvailabilityZones: $[taskcat_genaz_3]
-      AccountId: 
-      AccessToken: 
+      AccountId: override
+      AccessToken: override
       KeyPair: override
+    regions:
+    - us-east-1
