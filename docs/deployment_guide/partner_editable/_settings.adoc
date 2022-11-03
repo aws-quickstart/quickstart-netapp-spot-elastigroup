@@ -1,14 +1,14 @@
-:quickstart-project-name: quickstart-netapp-spot-elastigroup
-:quickstart-github-org: aws-quickstart
+:partner-solution-project-name: quickstart-netapp-spot-elastigroup
+:partner-solution-github-org: aws-quickstart
 :partner-product-name: Spot by Netapp Elastigroup
 :partner-product-short-name: Spot Elastigroup
 :partner-company-name: Spot by Netapp
-:doc-month: October 
+:doc-month: October
 :doc-year: 2022
 :partner-contributors: Karan Shetty {Spot by Netapp}, Zak Harabedian, {Spot by Netapp}, Yarden Kesari (Spot by Netapp) Ofer Levy (Spot by Netapp)
-// :other-contributors: 
+// :other-contributors:
 :aws-contributors: Maya Flores (AWS), Troy Ameigh (AWS)
-//:aws-ia-contributors: 
+//:aws-ia-contributors:
 :deployment_time: 10 minutes
 //:default_deployment_region: us-east-1
 // :private_repo:

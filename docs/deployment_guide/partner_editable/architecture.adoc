@@ -7,17 +7,18 @@ AWS Cloud.
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../docs/deployment_guide/images/elastigroup-quickstart-architecture-diagram.png[Architecture]
+image::../docs/deployment_guide/images/architecture-diagram.png[Architecture]
 
 As shown in <<architecture1>>, this Quick Start sets up the following:
 
-Deploying this Quick Start with default parameters builds an Elastigroup with Intelligent Traffic Flow and Predictive auto scaling feature enabled. The ITF feature will ensure effective CPU utilization among variety of instance types by distributing the traffic to target groups based on the number of vCPUs. The Predictive auto scaling utilizes machine learning algorithm to accurately predict the CPU pattern of your workloads and scale in advance of your demand. 
+Deploying this Quick Start with default parameters builds an Elastigroup with Intelligent Traffic Flow and Predictive auto scaling feature enabled. The ITF feature will ensure effective CPU utilization among variety of instance types by distributing the traffic to target groups based on the number of vCPUs. The Predictive auto scaling utilizes machine learning algorithm to accurately predict the CPU pattern of your workloads and scale in advance of your demand.
 
 
 * A highly available architecture that spans three Availability Zones.*
-* A virtual private cloud (VPC) configured with public and private subnets, according to AWS
+* A virtual private cloud (VPC) configured with public subnets, according to AWS
 best practices, to provide you with your own virtual network on AWS.*
-** Spot Elastigroup with Intelligent Traffic Flow and Predictive Autoscaling features enabled
+* EC2 Instances that provide the Spot Elastigroup with Intelligent Traffic Flow and Predictive Autoscaling features enabled.
+* Application Load Balancer that routes traffic based on the information from the Elastigroup Intelligent Traffic
 
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
 
