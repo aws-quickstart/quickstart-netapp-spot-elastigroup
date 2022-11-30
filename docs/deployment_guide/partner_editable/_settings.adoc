@@ -3,7 +3,7 @@
 :partner-product-name: Spot by Netapp Elastigroup
 :partner-product-short-name: Spot Elastigroup
 :partner-company-name: Spot by Netapp
-:doc-month: October
+:doc-month: December
 :doc-year: 2022
 :partner-contributors: Karan Shetty {Spot by Netapp}, Zak Harabedian, {Spot by Netapp}, Yarden Kesari (Spot by Netapp) Ofer Levy (Spot by Netapp)
 // :other-contributors:

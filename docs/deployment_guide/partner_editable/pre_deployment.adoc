@@ -2,11 +2,12 @@
 
 == Predeployment steps
 
-(Required) Create a Spot Account and token
-*Follow the guide to create a Spot account and connect your AWS account in which all the resources will be deployed by the CFN.
+(Required) Create a Spot account and token
+*Follow the guide to create a Spot account and connect the AWS account that all the resources will be deployed by the AWS CloudFormation.
 
 *Get your spot account ID from the Account settings in your console.
-*Create a personal Token which will deploy Elastigroup in the created account.
+
+*Create a personal Token to deploy Elastigroup in the created account.
 
 (Optional) Create a key pair
-If you want to access your instances using SSH as well as AWS Systems Manager, you must create a key pair. For details, refer to Amazon EC2 key pairs and Linux instances and Create a key pair using Amazon EC2.
+*If you want to access your instances using Secure Shell (SSH) and AWS Systems Manager, you must create a key pair. For details, refer to https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html[Amazon EC2 key pairs and Linux instances^] and https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html[Create a key pair using Amazon EC2^].
