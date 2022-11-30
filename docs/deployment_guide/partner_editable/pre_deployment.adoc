@@ -6,9 +6,9 @@
 
 * Follow the guide to create a Spot account, and connect the AWS account that all the resources will be deployed by the AWS CloudFormation.
 
-* Get your spot account ID from the Account settings in your console.
+* Get your spot account ID from the account settings in your console.
 
-* Create a personal Token to deploy Elastigroup in the created account.
+* Create a personal token to deploy Elastigroup in the created account.
 
 (Optional) Create a key pair:
 
