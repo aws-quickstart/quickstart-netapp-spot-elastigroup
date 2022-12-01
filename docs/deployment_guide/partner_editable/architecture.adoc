@@ -10,19 +10,19 @@ AWS Cloud, along with an Elastigroup with Intelligent Traffic Flow (ITF) and pre
 image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, this Partner Solution sets up the following:
-//TODO Troy, I moved the paragraph that was here to the first paragraph, and I reworded it a bit. Please let me know if that's okay.
+//TODO Troy, I moved the paragraph that was here to the first paragraph, and I reworded it a bit. Please let me know if that's okay. - All good with these changes.
 
-* A highly available architecture that spans three Availability Zones.* 
-//TODO Troy, there are asterisks at the end of this bullet and the one below it, but it looks like the sentence with the definition of the asterisks is missing below. 
+* A highly available architecture that spans three Availability Zones.
+//Removed asterisks
 
 * A virtual private cloud (VPC) configured with public subnets, according to AWS
-best practices, to provide you with your own virtual network on AWS.*
+best practices, to provide you with your own virtual network on AWS.
 
-* Amazon Elastic Compute Cloud (Amazon EC2) instances that provide the Spot Elastigroup with Intelligent Traffic Flow and predictive auto scaling features enabled. 
-//TODO Troy, I don't see any mention on the diagram of ECS, Spot Elastigroup, ITF, or Predictive Auto Scaling. Should that info be in the diagram?
+* Amazon Elastic Compute Cloud (Amazon EC2) instances that provide the Spot Elastigroup with Intelligent Traffic Flow and predictive auto scaling features enabled.
+//TODO Troy, I don't see any mention on the diagram of ECS, Spot Elastigroup, ITF, or Predictive Auto Scaling. Should that info be in the diagram? - So there is not ECS in this they are referring to EC2 (Elastic Compute Cloud = EC2) they make up Spot Elastigroup. I would say this is correct.
 
-* Application Load Balancer that routes traffic based on the information from the Elastigroup Intelligent Traffic. 
-//TODO Troy, I also don't see any mention of the Elastigroup Intelligent Traffic. Should that info be in the diagram?
+* Application Load Balancer that routes traffic based on the information from the Elastigroup Intelligent Traffic.
+//TODO Troy, I also don't see any mention of the Elastigroup Intelligent Traffic. Should that info be in the diagram? - The ALB is in the diagram, what they are saying is it was configured based on Netapp Spot Elastigroup Intelligent Traffic recommendations. I would say this is correct.
 
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
 
