@@ -45,7 +45,7 @@ Metadata:
 Parameters:
   VpcId:
     Type: AWS::EC2::VPC::Id
-    Description: Existing VPC ID
+    Description: Existing VPC ID.
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
     Description: List of Subnet IDs in your selected VPC.

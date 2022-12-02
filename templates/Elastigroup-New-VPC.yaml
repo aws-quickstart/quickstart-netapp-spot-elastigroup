@@ -48,7 +48,7 @@ Metadata:
       AccessToken:
         default: Spotinst API token
       KeyPair:
-        default: EC2 KeyPair
+        default: Amazon EC2 KeyPair
       ShouldRoll:
         default: Should roll when updating
       ShouldUpdateTargetCapacity:
@@ -96,9 +96,9 @@ Parameters:
     Type: String
     Description: Provide Spotinst API token.
   KeyPair:
-    Description: Existing EC2 KeyPair name to enable SSH access to the instances.
+    Description: Existing Amazon EC2 KeyPair name to enable SSH access to the instances.
     Type: AWS::EC2::KeyPair::KeyName
-    ConstraintDescription: Must be the name of an existing EC2 KeyPair.
+    ConstraintDescription: Must be the name of an existing Amazon EC2 KeyPair.
   ShouldRoll:
     Type: String
     Default: 'false'
