@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: >-
-  AWS CloudFormation Template creates a load balanced Elastigroup with a sample website where the instances can accept traffic from the load balancer. The web site is available on port 80, however, the
-  instances can be configured to listen on any port (8888 by default). ITF makes sure the traffic is distributed across the instance types by vCPU weight and Predictive auto scaling can scale up and down
-  instances in advance using ML algorithm. Scheduling tasks are set up to automatically scale down the group to 0 on Weekends(At 12:00 AM, only on Saturday (UTC)) and scale the capacity back up during Weekdays(At
-  12:00 AM, only on Monday (UTC)). **WARNING** This template creates one or more Amazon EC2 instances an Application Load Balancer and target groups. You will be billed for the AWS resources used if you
+  AWS CloudFormation Template creates a load-balanced Elastigroup with a sample website where the instances can accept traffic from the load balancer. The web site is available on port 80; however, the
+  instances can be configured to listen on any port (8888, by default). Intelligent Traffic Flow ensures the traffic is distributed across the instance types by vCPU weight, and predictive auto scaling can scale instances up and down
+  in advance, using Machine Learning algorithm. Scheduling tasks are set up to automatically scale down the group to 0 on weekends (at 12:00 AM, only on Saturday UTC) and scale the capacity back up during weekdays (at
+  12:00 AM, only on Monday UTC). **WARNING** This template creates one or more Amazon Elastic Compute Cloud (Amazon EC2) instances, an Application Load Balancer, and target groups. You'll be billed for the AWS resources used if you
   create a stack from this template. (qs-1ti8doc1u)
 Metadata:
   AWS::CloudFormation::Interface:
@@ -11,7 +11,7 @@ Metadata:
       - Label:
           default: Network configuration
         Parameters:
-          - VpcId
+          - VPCId
           - Subnets
       - Label:
           default: Elastic Spot Config
@@ -27,52 +27,52 @@ Metadata:
       VpcId:
         default: VPC ID
       Subnets:
-        default: VPC Subnets
+        default: VPC subnets
       AccountId:
-        default: Spotinst Account ID
+        default: Spotinst account ID
       AccessToken:
-        default: Spotinst API Token
+        default: Spotinst API token
       KeyPair:
-        default: EC2 KeyPair
+        default: Amazon EC2 KeyPair
       ShouldRoll:
         default: Should roll when updating
       ShouldUpdateTargetCapacity:
         default: Should update target capacity on group update
       AWSAccountType:
-        default: Type of AWS account the resources are created in
+        default: Type of AWS account resources are created in
       ElastigroupName:
-        default: Name for your Elastigroup
+        default: Elastigroup name
 Parameters:
   VpcId:
     Type: AWS::EC2::VPC::Id
-    Description: VpcId of your existing Virtual Private Cloud (VPC)
+    Description: Existing VPC ID
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
-    Description: The list of SubnetIds in your selected Virtual Private Cloud (VPC)
-    ConstraintDescription: must be a list of at least two existing subnets associated. They should be residing in the selected Virtual Private Cloud.
+    Description: List of Subnet IDs in your selected VPC.
+    ConstraintDescription: Must be a list of at least two existing subnets associated. They should reside in the selected VPC.
   AccountId:
     Type: String
-    Description: Provide Spotinst Account ID, act-...
+    Description: Provide Spotinst account ID.
   AccessToken:
     Type: String
-    Description: Provide Spotinst API Token
+    Description: Provide Spotinst API token.
   KeyPair:
-    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Description: Existing Amazon EC2 KeyPair name to enable SSH access to the instances.
     Type: AWS::EC2::KeyPair::KeyName
-    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+    ConstraintDescription: Must be the name of an existing Amazon EC2 KeyPair.
   ShouldRoll:
     Type: String
     Default: 'false'
-    Description: Should roll when updating
+    Description: Should roll when updating.
   ShouldUpdateTargetCapacity:
     Type: String
     Default: 'true'
     AllowedValues:
       - 'false'
       - 'true'
-    Description: Should update target capacity on group update
+    Description: Should update target capacity on group update.
   AWSAccountType:
-    Description: The type of AWS account the resources are created in
+    Description: Type of AWS account the resources are created in.
     Type: String
     AllowedValues:
       - AWSChina
@@ -80,8 +80,8 @@ Parameters:
     Default: AWS
   ElastigroupName:
     Type: String
-    Default: ElastigroupQuickStart
-    Description: Provide a Name for your Elastigroup
+    Default: ElastigroupPartnerSolution
+    Description: Provide a name for your Elastigroup.
 Mappings:
   AWSAccountTypeToDetails:
     AWSChina:
@@ -180,7 +180,7 @@ Resources:
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH access and HTTP access on the inbound port
+      GroupDescription: Enable SSH access and HTTP access on the inbound port.
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: '80'
@@ -192,7 +192,7 @@ Resources:
           FromPort: '22'
           ToPort: '22'
           CidrIp: '0.0.0.0/0'
-          Description: Allow SSH access to Any IP
+          Description: Allow SSH access to any IP.
       VpcId: !Ref 'VpcId'
   SpotinstElastigroup:
     Type: Custom::elasticgroup
