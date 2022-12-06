@@ -1,7 +1,7 @@
 :xrefstyle: short
 
 If you deploy this Partner Solution with default parameters, it builds a {partner-product-short-name} environment in the
-AWS Cloud, along with an Elastigroup with Intelligent Traffic Flow (ITF) and predictive auto scaling feature enabled. The ITF feature ensures effective CPU utilization among a variety of instance types by distributing the traffic to target groups based on the number of vCPUs. The predictive auto scaling utilizes machine learning algorithm to accurately predict the CPU pattern of your workloads and scale in advance of your demand.
+AWS Cloud, along with an Elastigroup with Intelligent Traffic Flow (ITF) and Predictive Autoscaling feature enabled. The ITF feature ensures effective CPU utilization among a variety of instance types by distributing the traffic to target groups based on the number of vCPUs. The Predictive Autoscaling utilizes machine learning algorithm to accurately predict the CPU pattern of your workloads and scale in advance of your demand.
 
 // Replace this example diagram with your own. Follow our wiki guidelines: https://w.amazon.com/bin/view/AWS_Quick_Starts/Process_for_PSAs/#HPrepareyourarchitecturediagram. Upload your source PowerPoint file to the GitHub {deployment name}/docs/images/ directory in its repository.
 
@@ -10,19 +10,15 @@ AWS Cloud, along with an Elastigroup with Intelligent Traffic Flow (ITF) and pre
 image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, this Partner Solution sets up the following:
-//TODO Troy, I moved the paragraph that was here to the first paragraph, and I reworded it a bit. Please let me know if that's okay. - All good with these changes.
 
 * A highly available architecture that spans three Availability Zones.
-//Removed asterisks
 
 * A virtual private cloud (VPC) configured with public subnets, according to AWS
 best practices, to provide you with your own virtual network on AWS.
 
-* Amazon Elastic Compute Cloud (Amazon EC2) instances that provide the Spot Elastigroup with Intelligent Traffic Flow and predictive auto scaling features enabled.
-//TODO Troy, I don't see any mention on the diagram of ECS, Spot Elastigroup, ITF, or Predictive Auto Scaling. Should that info be in the diagram? - So there is not ECS in this they are referring to EC2 (Elastic Compute Cloud = EC2) they make up Spot Elastigroup. I would say this is correct.
+* Amazon Elastic Compute Cloud (Amazon EC2) instances that provide the Spot Elastigroup with Intelligent Traffic Flow and Predictive Autoscaling features enabled.
 
 * Application Load Balancer that routes traffic based on the information from the Elastigroup Intelligent Traffic.
-//TODO Troy, I also don't see any mention of the Elastigroup Intelligent Traffic. Should that info be in the diagram? - The ALB is in the diagram, what they are saying is it was configured based on Netapp Spot Elastigroup Intelligent Traffic recommendations. I would say this is correct.
 
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
 
