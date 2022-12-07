@@ -11,7 +11,7 @@ Metadata:
       - Label:
           default: Network configuration
         Parameters:
-          - VPCId
+          - VpcId
           - Subnets
       - Label:
           default: Elastic Spot Config
