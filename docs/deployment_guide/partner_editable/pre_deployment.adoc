@@ -8,7 +8,7 @@
 
 * Get your spot account ID from the account settings in your console.
 
-* Create a personal token to deploy Elastigroup in the created account.
+* Create a personal token to deploy Spot by NetApp Elastigroup in the created account.
 
 (Optional) Create a key pair:
 

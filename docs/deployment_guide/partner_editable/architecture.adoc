@@ -16,9 +16,9 @@ As shown in <<architecture1>>, this Partner Solution sets up the following:
 * A virtual private cloud (VPC) configured with public subnets, according to AWS
 best practices, to provide you with your own virtual network on AWS.
 
-* Amazon Elastic Compute Cloud (Amazon EC2) instances that provide the Spot Elastigroup with Intelligent Traffic Flow and Predictive Autoscaling features enabled.
+* An Application Load Balancer configured with Elastigroup ITF and predictive auto scaling.
 
-* Application Load Balancer that routes traffic based on the information from the Elastigroup Intelligent Traffic.
+* Elastigroup deployed to Amazon EC2 instances.
 
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
 
