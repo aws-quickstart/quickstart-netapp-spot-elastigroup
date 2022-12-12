@@ -2,7 +2,7 @@
 
 For troubleshooting common Partner Solution issues, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^] and https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting CloudFormation^].
 
-For troubleshooting Spot Elastigroup, reach out to our support team using the live chat option within the Spot console or email support@spot.io. 
+For troubleshooting Spot by NetApp Elastigroup, reach out to our support team using the live chat option within the Spot console or email support@spot.io. 
 
 // == Resources
 // Uncomment section and add links to any external resources that are specified by the partner.
