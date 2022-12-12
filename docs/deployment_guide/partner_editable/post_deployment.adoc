@@ -7,7 +7,7 @@ Log into the https://console.spotinst.com[Spot Console^] to view the deployed Sp
 
 * https://docs.spot.io/elastigroup/[Spot by NetApp Elastigroup Documentation^]
 
-* https://docs.spot.io/api/#operation/elastigroupAwsCreate/[Spto by NetApp Elastigroup API Documentation^]
+* https://docs.spot.io/api/#operation/elastigroupAwsCreate/[Spot by NetApp Elastigroup API Documentation^]
 
 * https://docs.spot.io/elastigroup/features/intelligent-traffic-flow/[Spot by NetApp Elastigroup Intelligent Traffic Flow^]
 
