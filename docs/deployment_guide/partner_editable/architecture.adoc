@@ -1,5 +1,7 @@
 :xrefstyle: short
 
+Deploying this Partner Solution with default parameters builds the following {partner-product-short-name} environment in the
+AWS Cloud.
 If you deploy this Partner Solution with default parameters, it builds a {partner-product-short-name} environment in the
 AWS Cloud, along with an Elastigroup with Intelligent Traffic Flow (ITF) and predictive auto scaling feature enabled. The ITF feature ensures effective CPU utilization among a variety of instance types by distributing the traffic to target groups based on the number of vCPUs. The predictive auto scaling utilizes machine learning algorithm to accurately predict the CPU pattern of your workloads and scale in advance of your demand.
 
