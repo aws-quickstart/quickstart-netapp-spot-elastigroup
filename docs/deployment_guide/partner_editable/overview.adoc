@@ -1,6 +1,6 @@
 This Partner Solution deploys Spot by NetApp Elastigroup on the AWS Cloud. This guide covers the steps necessary to deploy this Partner Solution.
 
-For addtional information about product features, refer to https://docs.spot.io/elastigroup/features/[Elastgroup Features^].
+For addtional information about product features, refer to https://docs.spot.io/elastigroup/features/[Elastigroup Features^].
 
 // For advanced information about the product, troubleshooting, or additional functionality, refer to the https://{quickstart-github-org}.github.io/{quickstart-project-name}/operational/index.html[Operational Guide^].
 
