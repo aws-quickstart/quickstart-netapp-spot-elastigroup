@@ -16,7 +16,7 @@ As shown in <<architecture1>>, this Partner Solution sets up the following:
 * A virtual private cloud (VPC) configured with public subnets, according to AWS
 best practices, to provide you with your own virtual network on AWS.
 
-* An Application Load Balancer configured with Elastigroup ITF and predictive auto scaling.
+* An Application Load Balancer configured with Elastigroup Intelligent Traffic Flow (ITF) and predictive auto scaling.
 
 * Elastigroup deployed to Amazon EC2 instances.
 

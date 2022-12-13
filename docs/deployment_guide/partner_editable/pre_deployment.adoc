@@ -4,7 +4,7 @@
 
 (Required) Create a Spot account and token:
 
-* Follow the guide to create a Spot account at https://console.spotinst.com/spt/auth/signUp[Sign Up^], and connect the AWS account that all the resources will be deployed by the AWS CloudFormation.
+* Follow the guide to create a Spot account at https://console.spotinst.com/spt/auth/signUp[Sign Up^]. For all the resources to be deployed by the AWS CloudFormation, connect the AWS account to them.
 
 * Get your spot account ID from the account settings in your console.
 

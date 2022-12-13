@@ -2,15 +2,15 @@
 
 == Postdeployment steps
 
-Log into the https://console.spotinst.com[Spot Console^] to view the deployed Spot by NetApp Elastigroup and dashboards. Use the following resources to better understand Spot by NetApp Elastigroup features: 
+Log in to the https://console.spotinst.com[Spot Console^] to view the deployed Spot by NetApp Elastigroup and dashboards. Use the following resources to better understand Spot by NetApp Elastigroup features: 
 
 
-* https://docs.spot.io/elastigroup/[Spot by NetApp Elastigroup Documentation^]
+* https://docs.spot.io/elastigroup/[About Elastigroup^]
 
-* https://docs.spot.io/api/#operation/elastigroupAwsCreate/[Spot by NetApp Elastigroup API Documentation^]
+* https://docs.spot.io/api/#operation/elastigroupAwsCreate/[API documentation^]
 
-* https://docs.spot.io/elastigroup/features/intelligent-traffic-flow/[Spot by NetApp Elastigroup Intelligent Traffic Flow^]
+* https://docs.spot.io/elastigroup/features/intelligent-traffic-flow/[ITF^]
 
-* https://docs.spot.io/elastigroup/features/scaling/target-scaling?id=predictive-autoscaling[Spot by NetApp Elastigroup Predictive Autoscaling^]
+* https://docs.spot.io/elastigroup/features/scaling/target-scaling?id=predictive-autoscaling[Predictive Autoscaling^]
 
 
