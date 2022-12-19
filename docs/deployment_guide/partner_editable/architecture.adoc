@@ -18,7 +18,7 @@ best practices, to provide you with your own virtual network on AWS.
 
 * An Application Load Balancer configured with Elastigroup Intelligent Traffic Flow (ITF) and predictive auto scaling.
 
-* Elastigroup deployed to Amazon EC2 instances.
+* Elastigroup is deployed to Amazon EC2 instances.
 
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
 
