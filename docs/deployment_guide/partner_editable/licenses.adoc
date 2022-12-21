@@ -1,0 +1,5 @@
+// Include details about any licenses and how to sign up. Provide links as appropriate.
+
+There is no cost to use this Partner Solution, but you'll be billed for any AWS services or resources that this Partner Solution deploys. For more information, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^].
+
+Spot by NetApp Elastigroup has a free tier available. For more information, refer to https://spot.io/pricing/[Spot Pricing^].

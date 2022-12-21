@@ -1,0 +1,8 @@
+// Edit this placeholder text as necessary to describe the deployment options.
+
+This Partner Solution provides the following deployment options:
+
+* http://qs_launch_permalink[Deploy {partner-product-short-name} into a new VPC^]. This option builds a new AWS environment that consists of a new VPC, public subnets, Application Load Balancer, Spot Elastigroup, and other infrastructure components. It then deploys {partner-product-short-name} into this new VPC with predictive auto scaling and ITF enabled. 
+* http://qs_launch_permalink[Deploy {partner-product-short-name} into an existing VPC^]. This option provisions {partner-product-short-name} in your existing AWS infrastructure.
+
+This Partner Solution provides separate templates for these options. It also lets you configure instance types, Application Load Balancer, security groups, key pair, and VPC-related settings.

@@ -1,0 +1,15 @@
+//Include any predeployment steps here, such as signing up for a Marketplace AMI or making any changes to a partner account. If there are no predeployment steps, leave this file empty.
+
+== Predeployment steps
+
+(Required) Create a Spot account and token:
+
+* Follow the guide to create a Spot account at https://console.spotinst.com/spt/auth/signUp[Sign Up^]. Connect your AWS account to the Spot account. Use the AWS account that's used for all the resources being deployed by the AWS CloudFormation.
+
+* Get your spot account ID from the account settings in your console.
+
+* Create a personal token to deploy Spot by NetApp Elastigroup in the created account. For more information, refer to https://docs.spot.io/administration/api/create-api-token[Create an API Token^].
+
+(Optional) Create a key pair:
+
+* If you want to access your instances using Secure Shell (SSH) and AWS Systems Manager, you must create a key pair. For details, refer to https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html[Amazon EC2 key pairs and Linux instances^] and https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html[Create a key pair using Amazon EC2^].
